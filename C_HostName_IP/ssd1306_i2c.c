@@ -227,7 +227,7 @@ void OLED_Clear(void)
 
 
 /*
-*    LCD displays IP Address
+*    Gets the local host name
 */
 void GetHostName(void)
 {
