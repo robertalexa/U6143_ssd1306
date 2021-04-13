@@ -3,7 +3,7 @@ This fork contains alternative display modes.
 
 C - the original files with a fix to the IP address to use eth0.
 
-C_HostName_IP - updated to display host name on top and added a 4th display of the IP address. 
+C_HostName_IP - updated to display the host name on top and added a 4th display in the loop containing the IP address. 
 
 
 ## Preparation
