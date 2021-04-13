@@ -18,9 +18,7 @@ void main(void)
 	while(1)
 	{
     LCD_Display(symbol);
-    sleep(5);
-    sleep(1);
-    sleep(1);
+    sleep(5); //sleep for 5 seconds
     symbol++;
     if(symbol==4)
     {
