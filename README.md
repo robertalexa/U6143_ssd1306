@@ -1,7 +1,7 @@
 # U6143_ssd1306
 This fork contains alternative display modes. 
 
-C - the origional files with a fix to the IP address to use eth0.
+C - the original files with a fix to the IP address to use eth0.
 
 C_HostName_IP - updated to display host name on top and added a 4th display of the IP address. 
 
