@@ -17,7 +17,7 @@ Enable i2c
 
 ##  Clone U6143_ssd1306 library 
 ```bash
-git clone https://github.com/robiwisc/U6143_ssd1306.git
+git clone https://github.com/robertalexa/U6143_ssd1306.git
 ```
 ## Compile 
 ```bash
