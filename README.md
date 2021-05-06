@@ -19,6 +19,13 @@ Enable i2c
 ```bash
 git clone https://github.com/robertalexa/U6143_ssd1306.git
 ```
+## Rasbian Lite
+- If you are running Lite then you will need to manually install wiringpi or you will get an error while compiling
+- Ignore this for other version of Raspbian - wiringpi is installed by default
+```bash
+sudo apt install wiringpi
+```
+
 ## Compile 
 ```bash
 cd U6143_ssd1306/C
