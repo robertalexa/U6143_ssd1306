@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <sys/sysinfo.h>
+#include <stdlib.h>
 #include <sys/vfs.h>
 #include "ssd1306_i2c.h"
 #include "bmp.h"
@@ -295,33 +295,46 @@ unsigned char Obaintemperature(void)
 }
 
 /*
-*  LCD displays CPU memory and other information
+*  Helper for parsing file
+*/
+static long long get_entry(const char* name, const char* buf)
+{
+    char* hit = strstr(buf, name);
+    long long val = strtoll(hit + strlen(name), NULL, 10);
+    return val;
+}
+
+/*
+*  LCD displays used RAM memory out of total available
 */
 void LCD_DisPlayCpuMemory(void)
 {
-  struct sysinfo s_info;
-  float Totalram=0.0;
-  float freeram=0.0;
-  unsigned char Total[10]={0};
-  unsigned char free[10]={0};
-  if(sysinfo(&s_info)==0)            //Get memory information
-  {
-    OLED_ClearLint(2,4);
-    OLED_DrawPartBMP(0,2,128,4,BMP,1);
-    Totalram=s_info.totalram/1024/1024/1024.0;
-    freeram=s_info.freeram/1024/1024/1024.0;
-    Total[0]=(unsigned char)Totalram+'0';
-    Total[1]='.';
-    Total[2]=((unsigned char)(Totalram*10))%10+'0';
-    Total[3]=='\0';
-    
-    free[0]=(unsigned char)freeram+'0';
-    free[1]='.';
-    free[2]=((unsigned char)(freeram*10))%10+'0';
-    free[3]=='\0';
-    OLED_ShowString(55,3,free,8); 
-    OLED_ShowString(90,3,Total,8); 
+  static FILE* fd;
+  char buf[8192] = { 0 };
+  char Total[10]={0};
+  char Used[10]={0};
+
+  if (fd == NULL) {
+    fd = fopen("/proc/meminfo", "r");
   }
+
+  rewind(fd);
+
+  size_t len = fread(buf, 1, sizeof(buf) - 1, fd);
+
+  long long MemTotal = get_entry("MemTotal:", buf);
+  long long MemFree = get_entry("MemFree:", buf);
+  long long Buffers = get_entry("Buffers:", buf);
+  long long Cached = get_entry("Cached:", buf);
+  long long MemUsed = MemTotal-MemFree-Buffers-Cached;
+  
+  sprintf(Total, "%.1f", (double)MemTotal/1024/1024);
+  sprintf(Used, "%.1f", (double)MemUsed/1024/1024);
+  
+  OLED_ClearLint(2,4);
+  OLED_DrawPartBMP(0,2,128,4,BMP,1);
+  OLED_ShowString(55,3,Used,8); 
+  OLED_ShowString(90,3,Total,8);
 }
 
 

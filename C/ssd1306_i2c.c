@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <sys/sysinfo.h>
+#include <stdlib.h>
 #include <sys/vfs.h>
 #include "ssd1306_i2c.h"
 #include "bmp.h"
@@ -225,39 +225,46 @@ void OLED_Clear(void)
 }
 
 /*
-*    LCD displays CPU temperature and other information
+*  Helper for parsing file
 */
-void LCD_DisplayTemperature(void)
+static long long get_entry(const char* name, const char* buf)
 {
-  unsigned char symbol=0;
-  char ip[20] = {0};
-  unsigned int temp=0;
-  FILE * fp;
-  unsigned char  buffer[80] = {0};
-  temp=Obaintemperature();                  //Gets the temperature of the CPU
-  fp=popen("top -bn1 | grep load | awk '{printf \"%.2f\", $(NF-2)}'","r");    //Gets the load on the CPU
-  fgets(buffer, sizeof (buffer),fp);                                    //Read the CPU load
-  pclose(fp);
-  buffer[3]='\0';        
-  strcpy(ip,GetIpAddress());   //Get the IP address of the device's wireless network card
-  symbol=strcmp(IPSource,ip);
-  if(symbol!=0)
-  {
-    strcpy(IPSource,ip);
+    char* hit = strstr(buf, name);
+    long long val = strtoll(hit + strlen(name), NULL, 10);
+    return val;
+}
+
+/*
+*  LCD displays used RAM memory out of total available
+*/
+void LCD_DisPlayCpuMemory(void)
+{
+  static FILE* fd;
+  char buf[8192] = { 0 };
+  char Total[10]={0};
+  char Used[10]={0};
+
+  if (fd == NULL) {
+    fd = fopen("/proc/meminfo", "r");
   }
-  OLED_Clear();                                        //Remove the interface
-  OLED_DrawBMP(0,0,128,4,BMP,0);
-  OLED_ShowString(30,0,IPSource,8);          //Send the IP address to the lower machine
-  if(temp>10)                                                  
-  {
-    OLED_ShowChar(62,3,temp/10+'0',8);                        //According to the temperature
-    OLED_ShowChar(70,3,temp%10+'0',8);
-  }
-  else
-  {
-    OLED_ShowChar(70,3,temp+'0',8);
-  }
-  OLED_ShowString(87,3,buffer,8);                        //Display CPU load
+
+  rewind(fd);
+
+  size_t len = fread(buf, 1, sizeof(buf) - 1, fd);
+
+  long long MemTotal = get_entry("MemTotal:", buf);
+  long long MemFree = get_entry("MemFree:", buf);
+  long long Buffers = get_entry("Buffers:", buf);
+  long long Cached = get_entry("Cached:", buf);
+  long long MemUsed = MemTotal-MemFree-Buffers-Cached;
+  
+  sprintf(Total, "%.1f", (double)MemTotal/1024/1024);
+  sprintf(Used, "%.1f", (double)MemUsed/1024/1024);
+  
+  OLED_ClearLint(2,4);
+  OLED_DrawPartBMP(0,2,128,4,BMP,1);
+  OLED_ShowString(55,3,Used,8); 
+  OLED_ShowString(90,3,Total,8);
 }
 
 unsigned char Obaintemperature(void)
