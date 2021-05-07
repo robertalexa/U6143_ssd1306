@@ -304,12 +304,14 @@ void LCD_DisPlayCpuMemory(void)
   float freeram=0.0;
   unsigned char Total[10]={0};
   unsigned char free[10]={0};
+  unsigned int mem_unit=1;
   if(sysinfo(&s_info)==0)            //Get memory information
   {
+    mem_unit=s_info.mem_unit;
     OLED_ClearLint(2,4);
     OLED_DrawPartBMP(0,2,128,4,BMP,1);
-    Totalram=s_info.totalram/1024/1024/1024.0;
-    freeram=s_info.freeram/1024/1024/1024.0;
+    Totalram=s_info.totalram*mem_unit/1024/1024/1024.0;
+    freeram=s_info.freeram*mem_unit/1024/1024/1024.0;
     Total[0]=(unsigned char)Totalram+'0';
     Total[1]='.';
     Total[2]=((unsigned char)(Totalram*10))%10+'0';
