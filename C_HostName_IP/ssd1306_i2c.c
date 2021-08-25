@@ -307,7 +307,7 @@ static long long get_entry(const char* name, const char* buf)
 /*
 *  LCD displays used RAM memory out of total available
 */
-void LCD_DisPlayCpuMemory(void)
+void LCD_DisplayRamMemory(void)
 {
   static FILE* fd;
   char buf[8192] = { 0 };
@@ -399,7 +399,7 @@ void LCD_Display(unsigned char symbol)
       LCD_DisplayTemperature();
     break;
     case 1:
-      LCD_DisPlayCpuMemory();
+      LCD_DisplayRamMemory();
     break;
     case 2:
       LCD_DisplaySdMemory();
