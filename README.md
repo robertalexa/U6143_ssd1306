@@ -60,9 +60,9 @@ sudo ./display &
 - reboot your system
 
 ## Add automatic systemd start to systemd
-- replace C folder with whatever version you are using
+- replace `C_HostName_IP` folder with whatever version you are using
 ```bash
-sudo systemctl link /home/pi/U6143_ssd1306/C/ssd1306.service
+sudo systemctl link /home/pi/U6143_ssd1306/C_HostName_IP/ssd1306.service
 sudo systemctl enable ssd1306.service
 sudo systemctl start ssd1306.service
 ```
