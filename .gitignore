@@ -1,0 +1,9 @@
+C/display
+C/display.o
+C/ssd1306_i2c.o
+C_HostName_IP/display
+C_HostName_IP/display.o
+C_HostName_IP/ssd1306_i2c.o
+C_StaticHostName_IP/display
+C_StaticHostName_IP/display.o
+C_StaticHostName_IP/ssd1306_i2c.o
