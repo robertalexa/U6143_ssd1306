@@ -1,6 +1,6 @@
 # Install:
 #
-# sudo systemctl link /home/pi/U6143_ssd1306/C/ssd1306.service
+# sudo systemctl link /home/pi/Scripts/U6143_ssd1306/C/ssd1306.service
 # sudo systemctl enable ssd1306
 # sudo systemctl start ssd1306
 
@@ -10,7 +10,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/home/pi/U6143_ssd1306/C/display
+ExecStart=/home/pi/Scripts/U6143_ssd1306/C/display
 
 [Install]
 WantedBy=multi-user.target
