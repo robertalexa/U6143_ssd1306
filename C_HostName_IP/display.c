@@ -1,5 +1,5 @@
 /******
-Demo for ssd1306 i2c driver for  Raspberry Pi 
+Demo for ssd1306 i2c driver for  Raspberry Pi
 ******/
 
 #include "ssd1306_i2c.h"
@@ -8,13 +8,12 @@ Demo for ssd1306 i2c driver for  Raspberry Pi
 
 
 
-void main(void) 
+void main(void)
 {
   unsigned char symbol=0;
   ssd1306_begin(SSD1306_SWITCHCAPVCC, SSD1306_I2C_ADDRESS);      //LCD Screen initialization
   usleep(150*1000);                                                  //Short delay Ensure the normal response of the lower function
   OLED_Clear();
-  FirstGetIpAddress();                        //Get IP address
   GetHostName();
 	while(1)
 	{
