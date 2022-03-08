@@ -240,7 +240,7 @@ void GetHostName(void)
 void LCD_DisplayIPAddress(void)
 {
   char IPSource[20]={0};
-  IPSource = GetIpAddress();
+  strcpy(IPSource,GetIpAddress());
   //OLED_Clear();
   OLED_ClearLint(2,0);
   //OLED_DrawBMP(0,0,128,4,BMP,3);
