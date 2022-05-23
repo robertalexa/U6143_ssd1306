@@ -17,7 +17,7 @@ Go to `Interface Options` and `Enable i2c`
 
 ##  Clone U6143_ssd1306 library 
 ```bash
-cd ~/Scripts
+cd ~/scripts
 git clone https://github.com/robertalexa/U6143_ssd1306.git
 ```
 ## Rasbian Lite
@@ -30,7 +30,7 @@ sudo apt install wiringpi
 
 ## Compile 
 ```bash
-cd ~/Scripts/U6143_ssd1306/C_HostName_IP
+cd ~/scripts/U6143_ssd1306/C_HostName_IP
 
 ```
 ```bash
@@ -45,7 +45,7 @@ sudo ./display
 If you get errors when you try to run `sudo make` then you will need to use a different version of WiringPi. The original project is not supported anymore.
 ```bash
 sudo apt remove wiringpi
-cd ~/Scripts
+cd ~/scripts
 git clone https://github.com/WiringPi/WiringPi
 cd WiringPi
 ./build
@@ -58,7 +58,7 @@ PS: I have no affiliation with the author of the WiringPi fork used in these ins
 ## Recommended - Add automatic systemd service
 - replace `C_HostName_IP` folder with whatever version you are using
 ```bash
-sudo systemctl link /home/pi/Scripts/U6143_ssd1306/C_HostName_IP/ssd1306.service
+sudo systemctl link /home/pi/scripts/U6143_ssd1306/C_HostName_IP/ssd1306.service
 sudo systemctl enable ssd1306.service
 sudo systemctl start ssd1306.service
 ```
@@ -71,7 +71,7 @@ sudo nano /etc/rc.local
 ```
 - Add command to the rc.local file
 ```bash
-cd /home/pi/Scripts/U6143_ssd1306/C_HostName_IP
+cd /home/pi/scripts/U6143_ssd1306/C_HostName_IP
 sudo make clean 
 sudo make 
 sudo ./display &
@@ -90,7 +90,7 @@ sudo apt-get install python3-pil
 ```
 - Test demo 
 ```bash 
-cd /home/pi/Scripts/U6143_ssd1306/python 
+cd /home/pi/scripts/U6143_ssd1306/python 
 sudo python3 ssd1306_stats.py
 ```
 
