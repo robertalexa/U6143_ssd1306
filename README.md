@@ -46,14 +46,10 @@ If you get errors when you try to run `sudo make` then you will need to use a di
 ```bash
 sudo apt remove wiringpi
 cd ~/Scripts
-git clone https://github.com/Milliways2/wPi.git
-cd wPi
+git clone https://github.com/WiringPi/WiringPi
+cd WiringPi
 ./build
 
-```
-Edit `Makefile` in the folder you plan on using (e.g. C_HostName_IP) and replace the `LIBS` line with
-```bash
-LIBS = -lwiringPi -L/opt/vc/lib -lbcm_host
 ```
 Run the Compile and Run instructions again (above). It should all work now.
 
