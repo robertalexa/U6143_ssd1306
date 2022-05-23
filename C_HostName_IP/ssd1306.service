@@ -10,7 +10,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/home/pi/Scripts/U6143_ssd1306/C_HostName_IP/display
+ExecStart=/home/pi/scripts/U6143_ssd1306/C_HostName_IP/display
 
 [Install]
 WantedBy=multi-user.target
